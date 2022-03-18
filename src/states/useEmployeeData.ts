@@ -1,39 +1,50 @@
-import { useMemo } from "react"
+import { useMemo, useEffect } from "react"
 import { atom, useAtom } from "jotai";
 import { Column } from "react-table";
+import { useQuery } from "react-query";
+import { get_user_all } from "src/states/APIs"
 
 type StateValues = {
-    number: string;
-    name: string;
-    bikou: string;
+    id: number;
+    firstName: string;
+    lastName: string;
+    email: string;
 };
 
-const InitState: StateValues[] = [{
-    number: "1",
-    name: "test",
-    bikou: "test",
-}]
-
-const EmployeeDataAtom = atom<StateValues[]>(InitState);
+const EmployeeDataAtom = atom<StateValues[]>([]);
 
 export const useEmployeeData = () => {
+    const { isLoading, error, data } = useQuery(
+        "get_user_all", () => get_user_all()
+    );
     const columns: Column<StateValues>[] = useMemo(
         () => [
             {
-                Header: "番号",
-                accessor: "number",
+                Header: "no",
+                accessor: "id",
+            },
+            {
+                Header: "苗字",
+                accessor: "lastName",
             },
             {
                 Header: "名前",
-                accessor: "name",
+                accessor: "firstName",
             },
             {
-                Header: "備考",
-                accessor: "bikou",
+                Header: "メール",
+                accessor: "email",
             }
         ],
         []
     );
     const [EmployeeData, setEmployeeData] = useAtom(EmployeeDataAtom);
-    return { columns, EmployeeData };
+
+    useEffect(() => {
+        if (data != undefined) {
+            setEmployeeData(data);
+        }
+    }, [data]);
+
+    return { columns, EmployeeData, isLoading, error };
 };
