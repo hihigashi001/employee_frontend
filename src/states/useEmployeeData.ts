@@ -5,10 +5,22 @@ import { useQuery } from "react-query";
 import { get_user_all } from "src/states/APIs"
 
 type StateValues = {
-    id: number;
-    firstName: string;
-    lastName: string;
-    email: string;
+    no: number,
+    employeeId: string,
+    department1: string,
+    department2: string,
+    employeeClass: string,
+    name: string,
+    name_kana: string,
+    mailAddress: string,
+    position: string,
+    joiningDate: string,
+    retirementDate: string,
+    suspensionDate: string,
+    secondedDate: string,
+    secondedDestination: string,
+    maidenName: string,
+    remarks: string,
 };
 
 const EmployeeDataAtom = atom<StateValues[]>([]);
@@ -20,21 +32,69 @@ export const useEmployeeData = () => {
     const columns: Column<StateValues>[] = useMemo(
         () => [
             {
-                Header: "no",
-                accessor: "id",
+                Header: "No",
+                accessor: "no",
             },
             {
-                Header: "苗字",
-                accessor: "lastName",
+                Header: "社員ID",
+                accessor: "employeeId",
             },
             {
-                Header: "名前",
-                accessor: "firstName",
+                Header: "所属1",
+                accessor: "department1",
             },
             {
-                Header: "メール",
-                accessor: "email",
-            }
+                Header: "所属2",
+                accessor: "department2",
+            },
+            {
+                Header: "社員区分",
+                accessor: "employeeClass",
+            },
+            {
+                Header: "氏名",
+                accessor: "name",
+            },
+            {
+                Header: "氏名カナ",
+                accessor: "name_kana",
+            },
+            {
+                Header: "メールアドレス",
+                accessor: "mailAddress",
+            },
+            {
+                Header: "役職",
+                accessor: "position",
+            },
+            {
+                Header: "入社日",
+                accessor: "joiningDate",
+            },
+            {
+                Header: "退職日",
+                accessor: "retirementDate",
+            },
+            {
+                Header: "休職開始日",
+                accessor: "suspensionDate",
+            },
+            {
+                Header: "出向日",
+                accessor: "secondedDate",
+            },
+            {
+                Header: "出向先",
+                accessor: "secondedDestination",
+            },
+            {
+                Header: "旧姓",
+                accessor: "maidenName",
+            },
+            {
+                Header: "備考",
+                accessor: "remarks",
+            },
         ],
         []
     );
