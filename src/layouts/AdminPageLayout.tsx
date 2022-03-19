@@ -1,7 +1,8 @@
 import { ReactNode } from "react";
 import { SharedDialog } from "src/components/shared/SharedDialog";
 import { useDialog } from "src/states/useDialog";
-import { MainHeader } from "src/components/shared/MainHeader";
+import { MainHeader } from "src/components/shared/layoutsParts/MainHeader";
+import { MainContainer } from "src/components/shared/layoutsParts/MainContainer";
 
 type Props = {
   children?: ReactNode;
@@ -13,7 +14,7 @@ export const AdminPageLayout = ({ children }: Props) => {
     <>
       {dialogState.isDialog && <SharedDialog />}
       <MainHeader />
-      <div className="w-screen h-screen">{children}</div>
+      <MainContainer>{children}</MainContainer>
     </>
   );
 };
