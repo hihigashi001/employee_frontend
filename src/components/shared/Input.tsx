@@ -15,7 +15,7 @@ type Props = {
   onBlur?: React.FocusEventHandler<HTMLInputElement>;
 };
 
-export const SharedInput = ({
+export const Input = ({
   id,
   className,
   type,

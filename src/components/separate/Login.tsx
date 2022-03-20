@@ -1,5 +1,5 @@
 import { Button } from "src/components/shared/Button"
-import { SharedInput } from "src/components/shared/Input"
+import { Input } from "src/components/shared/Input"
 import { useLoginForm } from "src/states/useLoginForm"
 
 export const Login = () => {
@@ -9,14 +9,14 @@ export const Login = () => {
             <div className="max-w-md w-full space-y-8">
                 <h2 className="text-center text-3xl font-extrabold text-gray-700">Emplyee Management System</h2>
                 <div className="space-y-8">
-                    <SharedInput
+                    <Input
                         name="loginId"
                         type="text"
                         placeholder="employee id"
                         value={LoginForm.loginId}
                         onChange={(e) => LoginFormHandler.onChange(e)}
                     />
-                    <SharedInput
+                    <Input
                         name="password"
                         type="password"
                         placeholder="password"

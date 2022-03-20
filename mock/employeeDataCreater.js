@@ -4,11 +4,11 @@ let db = {
     users: []
 }
 
-const mockDataMaxCount = 50
+const mockDataMaxCount = 20
 
 for (let i = 1; i < mockDataMaxCount; ++i) {
     db.users.push({
-        no: i,
+        id: i,
         employeeId: faker.finance.routingNumber(),
         department1: faker.name.jobArea(),
         department2: faker.name.jobType(),

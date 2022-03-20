@@ -5,7 +5,7 @@ import { useQuery } from "react-query";
 import { get_user_all } from "src/states/APIs"
 
 type StateValues = {
-    no: number,
+    id: number,
     employeeId: string,
     department1: string,
     department2: string,
@@ -33,7 +33,7 @@ export const useEmployeeData = () => {
         () => [
             {
                 Header: "No",
-                accessor: "no",
+                accessor: "id",
             },
             {
                 Header: "社員ID",
