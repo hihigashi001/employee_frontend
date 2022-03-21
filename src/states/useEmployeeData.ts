@@ -3,6 +3,7 @@ import { atom, useAtom } from "jotai";
 import { Column } from "react-table";
 import { useQuery } from "react-query";
 import { get_user_all } from "src/states/APIs"
+import { cellFunction_link } from "src/utilitys/functions";
 
 type StateValues = {
     id: number,
@@ -34,6 +35,7 @@ export const useEmployeeData = () => {
             {
                 Header: "No",
                 accessor: "id",
+                Cell: cellFunction_link,
             },
             {
                 Header: "社員ID",

@@ -75,3 +75,13 @@ export const post_user_update = async (data: update_data) => {
     });
   return res;
 };
+
+export const get_user_detail = async (id: string) => {
+  const res = await axios.get(`${apiUrl}/users/${id}`);
+  return res.data;
+};
+
+export const delete_user = async (id: string) => {
+  const res = await axios.delete(`${apiUrl}/users/${id}`);
+  return res.data;
+};

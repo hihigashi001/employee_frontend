@@ -1,6 +1,11 @@
+import { useRouter } from "next/router";
 import Router from "next/router";
-import { useState } from "react";
-import { post_user_update } from "src/states/APIs";
+import { useEffect, useState } from "react";
+import {
+  post_user_update,
+  get_user_detail,
+  delete_user,
+} from "src/states/APIs";
 import { error, info } from "src/components/shared/Toast";
 
 type StateValues = {
@@ -25,7 +30,8 @@ type StateValues = {
 type StateHandlers = {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onClickCancel: () => void;
-  onClicUpdate: () => void;
+  onClickUpdate: () => void;
+  onClickDelete: () => void;
 };
 
 const initValues = {
@@ -49,6 +55,15 @@ const initValues = {
 
 export const useFormUserUpdate = () => {
   const [FormUserUpdate, setFormUserUpdate] = useState<StateValues>(initValues);
+  const router = useRouter();
+  const id = router.asPath.slice(8);
+  useEffect(() => {
+    if (id !== "[id]") {
+      get_user_detail(id).then((data) => {
+        setFormUserUpdate(data);
+      });
+    }
+  }, [id]);
   const FormUserUpdateHandler: StateHandlers = {
     onChange: (event) => {
       const value = event.target.value;
@@ -59,7 +74,7 @@ export const useFormUserUpdate = () => {
       setFormUserUpdate(initValues);
       Router.back();
     },
-    onClicUpdate: () => {
+    onClickUpdate: () => {
       post_user_update(FormUserUpdate).then((results) => {
         if (results !== undefined) {
           if (results.id !== undefined) {
@@ -75,6 +90,10 @@ export const useFormUserUpdate = () => {
           setFormUserUpdate(initValues);
         }
       });
+    },
+    onClickDelete: () => {
+      const del_id = String(FormUserUpdate.id);
+      delete_user(del_id);
     },
   };
   return { FormUserUpdate, FormUserUpdateHandler };

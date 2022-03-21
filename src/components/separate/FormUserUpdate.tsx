@@ -1,8 +1,9 @@
 // componets
 import { Button } from "src/components/shared/Button";
 import { Input } from "src/components/shared/Input";
-import { FaPlusCircle } from "react-icons/fa";
+import { FaPlusCircle, FaTrash } from "react-icons/fa";
 import { useFormUserUpdate } from "src/states/useFormUserUpdate";
+import Router from "next/router";
 
 export const FormUserUpdate = () => {
   const { FormUserUpdate, FormUserUpdateHandler } = useFormUserUpdate();
@@ -16,12 +17,24 @@ export const FormUserUpdate = () => {
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault();
-    FormUserUpdateHandler.onClicUpdate();
+    FormUserUpdateHandler.onClickUpdate();
+  };
+  const funcDel = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    event.preventDefault();
+    FormUserUpdateHandler.onClickDelete();
+    Router.push("/admin");
   };
 
   return (
     <div>
       <form className="max-w-7xl m-auto" autoComplete="off">
+        <div className="flex justify-between w-full gap-x-4 py-2">
+          <div>No. {FormUserUpdate.id}</div>
+          <Button variant="red" className="w-3/12" onClick={funcDel}>
+            <FaTrash color="" />
+            　削除する
+          </Button>
+        </div>
         <div className="w-full bg-white p-4 rounded-md border border-gray-300">
           <div className="flex my-4">
             <div className="w-4/12 text-gray-700 p-2">社員ID</div>
