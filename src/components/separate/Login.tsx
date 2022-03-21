@@ -7,12 +7,12 @@ export const Login = () => {
     return (
         <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-md w-full space-y-8">
-                <h2 className="text-center text-3xl font-extrabold text-gray-700">Emplyee Management System</h2>
+                <h2 className="text-center text-3xl font-extrabold text-gray-700">Employee Management System</h2>
                 <div className="space-y-8">
                     <Input
                         name="loginId"
                         type="text"
-                        placeholder="employee id"
+                        placeholder="username"
                         value={LoginForm.loginId}
                         onChange={(e) => LoginFormHandler.onChange(e)}
                     />
