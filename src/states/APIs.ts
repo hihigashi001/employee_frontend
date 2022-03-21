@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const apiUrl = "https://api3.amidakuji.net:10443";
+const apiUrl = "https://localhost:777";
 
 type create_data = {
   employeeId: string;
@@ -38,7 +38,6 @@ type update_data = {
   maidenName: string;
   remarks: string;
 };
-
 
 export const get_user_all = async () => {
   const res = await axios.get(`${apiUrl}/users`);
