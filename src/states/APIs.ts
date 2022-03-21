@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const apiUrl = "https://localhost:777";
+const apiUrl = "https://api3.amidakuji.net:10443";
 
 type create_data = {
   employeeId: string;
