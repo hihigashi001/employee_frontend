@@ -1,7 +1,7 @@
 // componets
 import { Button } from "src/components/shared/Button";
 import { Input } from "src/components/shared/Input";
-import { FaPlusCircle } from "react-icons/fa";
+import { FaPlusCircle, FaCreativeCommonsBy } from "react-icons/fa";
 import { useFormUserCreate } from "src/states/useFormUserCreate";
 
 export const FormUserCreate = () => {
@@ -22,6 +22,10 @@ export const FormUserCreate = () => {
   return (
     <div>
       <form className="max-w-7xl m-auto" autoComplete="off">
+        <div className="flex mb-2">
+          <FaCreativeCommonsBy size={25} color="gray" />
+          <div className="ml-2 text-gray-700 text-lg">新規作成</div>
+        </div>
         <div className="w-full bg-white p-4 rounded-md border border-gray-300">
           <div className="flex my-4">
             <div className="w-4/12 text-gray-700 p-2">社員ID</div>
@@ -180,7 +184,7 @@ export const FormUserCreate = () => {
           </Button>
           <Button className="w-3/12" onClick={onSubmitFunction}>
             <FaPlusCircle color="" />
-            　追加する
+            追加する
           </Button>
         </div>
       </form>
