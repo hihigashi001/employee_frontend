@@ -11,3 +11,7 @@ export const cellFunction_link = ({value}: any) => {
       </Link>
     );
   };
+
+export const NullValidator = (value: string | undefined) => {
+  return !value ? true : false;
+};

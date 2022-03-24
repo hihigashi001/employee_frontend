@@ -1,4 +1,4 @@
-import Router from "next/router";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import {
   post_user_update,
@@ -7,9 +7,12 @@ import {
 } from "src/states/APIs";
 import { error, info } from "src/components/shared/Toast";
 import { useQueryClient } from 'react-query'
+import { useDialog } from 'src/states/useDialog'
+import { NullValidator } from "src/utilitys/functions"
 
 type StateValues = {
   id: number;
+  employeeId_error: string;
   employeeId: string;
   department1: string;
   department2: string;
@@ -36,6 +39,7 @@ type StateHandlers = {
 
 const initValues = {
   id: 0,
+  employeeId_error: "",
   employeeId: "",
   department1: "",
   department2: "",
@@ -54,9 +58,11 @@ const initValues = {
 };
 
 export const useFormUserUpdate = () => {
+  const router = useRouter()
+  const { handler } = useDialog();
   const queryClient = useQueryClient()
   const [FormUserUpdate, setFormUserUpdate] = useState<StateValues>(initValues);
-  const id = Router.asPath.slice(8);
+  const id = router.asPath.slice(8);
   useEffect(() => {
     if (id !== "[id]") {
       get_user_detail(id).then((data) => {
@@ -72,32 +78,46 @@ export const useFormUserUpdate = () => {
     },
     onClickCancel: () => {
       setFormUserUpdate(initValues);
-      Router.back();
+      router.back();
     },
     onClickUpdate: () => {
-      post_user_update(FormUserUpdate).then((results) => {
-        if (results !== undefined) {
-          if (results.id !== undefined) {
-            setFormUserUpdate(initValues);
-            info("変更完了しました。");
-            queryClient.invalidateQueries('get_user_all')
-            Router.back();
+      const employeeId_errorMessage = NullValidator(FormUserUpdate.employeeId)
+        ? "※"
+        : "";
+      setFormUserUpdate({ ...FormUserUpdate, employeeId_error: employeeId_errorMessage });
+      if (employeeId_errorMessage == "") {
+        post_user_update(FormUserUpdate).then((results) => {
+          if (results !== undefined) {
+            if (results.id !== undefined) {
+              setFormUserUpdate(initValues);
+              info("変更完了しました。");
+              queryClient.invalidateQueries('get_user_all')
+              router.back();
+            } else {
+              error("サーバエラーです。登録失敗しました。");
+              setFormUserUpdate(initValues);
+            }
           } else {
             error("サーバエラーです。登録失敗しました。");
             setFormUserUpdate(initValues);
           }
-        } else {
-          error("サーバエラーです。登録失敗しました。");
-          setFormUserUpdate(initValues);
-        }
-      });
+        });
+      } else {
+        error("※必須事項を入力してください。");
+      }
     },
     onClickDelete: () => {
-      const del_id = String(FormUserUpdate.id);
-      delete_user(del_id).then(() => {
-        queryClient.invalidateQueries('get_user_all')
-      })
-      Router.back();
+      const funcDeleteUser = () => {
+        const del_id = String(FormUserUpdate.id);
+        delete_user(del_id).then(() => {
+          queryClient.invalidateQueries('get_user_all')
+        })
+        router.back();
+      }
+      handler.dialogCreate({
+        text: "本当に削除しますか？",
+        func: () => funcDeleteUser(),
+      });
     },
   };
   return { FormUserUpdate, FormUserUpdateHandler };

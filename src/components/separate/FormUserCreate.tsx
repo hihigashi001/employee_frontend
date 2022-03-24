@@ -35,6 +35,7 @@ export const FormUserCreate = () => {
               name="employeeId"
               value={FormUserCreate.employeeId}
               onChange={(e) => FormUserCreateHandler.onChange(e)}
+              error={FormUserCreate.employeeId_error}
             />
           </div>
           <div className="flex my-4">

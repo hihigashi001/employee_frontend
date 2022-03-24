@@ -1,10 +1,11 @@
-import Router from "next/router";
+import { useRouter } from "next/router";
 import { Button } from "src/components/shared/Button";
 import { FaPlusCircle } from "react-icons/fa";
 
 export const Buttons = () => {
+  const router = useRouter()
   const onClickNewCreate = () => {
-    Router.push("/admin-user-create");
+    router.push("/admin-user-create");
   };
   return (
     <div className="w-full flex gap-x-4 py-2">

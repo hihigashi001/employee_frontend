@@ -1,12 +1,15 @@
 import { atom, useAtom } from "jotai";
-import Router from 'next/router'
+import { useRouter } from 'next/router'
 import { auth_login } from "src/states/APIs"
 import { error } from "src/components/shared/Toast";
 import { useDialog } from "src/states/useDialog";
+import { NullValidator } from "src/utilitys/functions"
 
 type StateValues = {
     username: string;
     password: string;
+    username_error: string;
+    password_error: string;
 };
 
 type StateHandlers = {
@@ -18,11 +21,14 @@ type StateHandlers = {
 const InitState: StateValues = {
     username: "",
     password: "",
+    username_error: "",
+    password_error: "",
 };
 
 const LoginFormAtom = atom<StateValues>(InitState);
 
 export const useLoginForm = () => {
+    const router = useRouter()
     const { handler } = useDialog();
     const [LoginForm, setLoginForm] = useAtom(LoginFormAtom);
     const LoginFormHandler: StateHandlers = {
@@ -33,20 +39,29 @@ export const useLoginForm = () => {
         },
         onClick: async (event) => {
             event.preventDefault()
-            auth_login({ username: LoginForm.username, password: LoginForm.password }).then((results) => {
-                if (results !== undefined) {
-                    localStorage.setItem("JWT", results.access);
-                    results.access && Router.push("/admin")
-                    !results.access ? error("ログインに失敗しました。") : console.log("ログイン成功しました。")
-                } else {
-                    error("ログインに失敗しました。");
-                }
-            });
+            const usernameErrorMessage = NullValidator(LoginForm.username)
+                ? "※入力必須"
+                : "";
+            const passwordErrorMessage = NullValidator(LoginForm.password)
+                ? "※入力必須"
+                : "";
+            setLoginForm({ ...LoginForm, username_error: usernameErrorMessage, password_error: passwordErrorMessage });
+            if (usernameErrorMessage == "" && passwordErrorMessage == "") {
+                auth_login({ username: LoginForm.username, password: LoginForm.password }).then((results) => {
+                    if (results !== undefined) {
+                        localStorage.setItem("JWT", results.access);
+                        results.access && router.push("/admin")
+                        !results.access ? error("ログインに失敗しました。") : console.log("ログイン成功しました。")
+                    } else {
+                        error("ログインに失敗しました。");
+                    }
+                });
+            }
         },
         onClickLogout: (event) => {
             event.preventDefault()
             const funcLogout = () => {
-                Router.push("/");
+                router.push("/");
                 localStorage.removeItem("JWT")
             };
             handler.dialogCreate({

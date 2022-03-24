@@ -1,10 +1,12 @@
-import Router from "next/router";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { post_user_create } from "src/states/APIs";
 import { error, info } from "src/components/shared/Toast";
 import { useQueryClient } from 'react-query'
+import { NullValidator } from "src/utilitys/functions"
 
 type StateValues = {
+  employeeId_error: string;
   employeeId: string;
   department1: string;
   department2: string;
@@ -29,6 +31,7 @@ type StateHandlers = {
 };
 
 const initValues = {
+  employeeId_error: "",
   employeeId: "",
   department1: "",
   department2: "",
@@ -47,6 +50,7 @@ const initValues = {
 };
 
 export const useFormUserCreate = () => {
+  const router = useRouter()
   const queryClient = useQueryClient()
   const [FormUserCreate, setFormUserCreate] = useState<StateValues>(initValues);
   const FormUserCreateHandler: StateHandlers = {
@@ -57,24 +61,32 @@ export const useFormUserCreate = () => {
     },
     onClickCancel: () => {
       setFormUserCreate(initValues);
-      Router.back();
+      router.back();
     },
     onClickNewCreate: () => {
-      post_user_create(FormUserCreate).then((results) => {
-        if (results !== undefined) {
-          if (results.id !== undefined) {
-            setFormUserCreate(initValues);
-            info("登録完了しました。");
-            queryClient.invalidateQueries('get_user_all')
+      const employeeId_errorMessage = NullValidator(FormUserCreate.employeeId)
+        ? "※"
+        : "";
+      setFormUserCreate({ ...FormUserCreate, employeeId_error: employeeId_errorMessage });
+      if (employeeId_errorMessage == "") {
+        post_user_create(FormUserCreate).then((results) => {
+          if (results !== undefined) {
+            if (results.id !== undefined) {
+              setFormUserCreate(initValues);
+              info("登録完了しました。");
+              queryClient.invalidateQueries('get_user_all')
+            } else {
+              error("サーバエラーです。登録失敗しました。");
+              setFormUserCreate(initValues);
+            }
           } else {
             error("サーバエラーです。登録失敗しました。");
             setFormUserCreate(initValues);
           }
-        } else {
-          error("サーバエラーです。登録失敗しました。");
-          setFormUserCreate(initValues);
-        }
-      });
+        });
+      } else {
+        error("※必須事項を入力してください。");
+      }
     },
   };
   return { FormUserCreate, FormUserCreateHandler };

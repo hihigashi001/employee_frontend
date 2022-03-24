@@ -17,6 +17,7 @@ export const Login = () => {
             placeholder="username"
             value={LoginForm.username}
             onChange={(e) => LoginFormHandler.onChange(e)}
+            error={LoginForm.username_error}
           />
           <Input
             name="password"
@@ -24,6 +25,7 @@ export const Login = () => {
             placeholder="password"
             value={LoginForm.password}
             onChange={(e) => LoginFormHandler.onChange(e)}
+            error={LoginForm.password_error}
           />
           <Button onClick={LoginFormHandler.onClick}>Sign in</Button>
         </div>

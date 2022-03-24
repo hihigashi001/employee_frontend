@@ -3,7 +3,6 @@ import { Button } from "src/components/shared/Button";
 import { Input } from "src/components/shared/Input";
 import { FaPlusCircle, FaTrash } from "react-icons/fa";
 import { useFormUserUpdate } from "src/states/useFormUserUpdate";
-import Router from "next/router";
 
 export const FormUserUpdate = () => {
   const { FormUserUpdate, FormUserUpdateHandler } = useFormUserUpdate();
@@ -22,7 +21,6 @@ export const FormUserUpdate = () => {
   const funcDel = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
     FormUserUpdateHandler.onClickDelete();
-    Router.push("/admin");
   };
 
   return (
@@ -32,7 +30,7 @@ export const FormUserUpdate = () => {
           <div>No. {FormUserUpdate.id}</div>
           <Button variant="red" className="w-3/12" onClick={funcDel}>
             <FaTrash size={20} />
-            　削除する
+            削除する
           </Button>
         </div>
         <div className="w-full bg-white p-4 rounded-md border border-gray-300">
@@ -44,6 +42,7 @@ export const FormUserUpdate = () => {
               name="employeeId"
               value={FormUserUpdate.employeeId}
               onChange={(e) => FormUserUpdateHandler.onChange(e)}
+              error={FormUserUpdate.employeeId_error}
             />
           </div>
           <div className="flex my-4">
@@ -193,7 +192,7 @@ export const FormUserUpdate = () => {
           </Button>
           <Button className="w-3/12" onClick={onSubmitFunction}>
             <FaPlusCircle size={20} />
-            　変更する
+            変更する
           </Button>
         </div>
       </form>
