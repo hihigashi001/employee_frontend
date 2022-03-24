@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import Router from "next/router";
 import { useEffect, useState } from "react";
 import {
@@ -7,6 +6,7 @@ import {
   delete_user,
 } from "src/states/APIs";
 import { error, info } from "src/components/shared/Toast";
+import { useQueryClient } from 'react-query'
 
 type StateValues = {
   id: number;
@@ -54,9 +54,9 @@ const initValues = {
 };
 
 export const useFormUserUpdate = () => {
+  const queryClient = useQueryClient()
   const [FormUserUpdate, setFormUserUpdate] = useState<StateValues>(initValues);
-  const router = useRouter();
-  const id = router.asPath.slice(8);
+  const id = Router.asPath.slice(8);
   useEffect(() => {
     if (id !== "[id]") {
       get_user_detail(id).then((data) => {
@@ -80,6 +80,7 @@ export const useFormUserUpdate = () => {
           if (results.id !== undefined) {
             setFormUserUpdate(initValues);
             info("変更完了しました。");
+            queryClient.invalidateQueries('get_user_all')
             Router.back();
           } else {
             error("サーバエラーです。登録失敗しました。");
@@ -93,7 +94,10 @@ export const useFormUserUpdate = () => {
     },
     onClickDelete: () => {
       const del_id = String(FormUserUpdate.id);
-      delete_user(del_id);
+      delete_user(del_id).then(() => {
+        queryClient.invalidateQueries('get_user_all')
+      })
+      Router.back();
     },
   };
   return { FormUserUpdate, FormUserUpdateHandler };

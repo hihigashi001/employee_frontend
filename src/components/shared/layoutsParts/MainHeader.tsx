@@ -1,21 +1,10 @@
 import { useState } from "react";
-import Router from "next/router";
 import { FaSignOutAlt } from "react-icons/fa";
-import { useDialog } from "src/states/useDialog";
+import { useLoginForm } from "src/states/useLoginForm";
 
 export const MainHeader = () => {
-  const { handler } = useDialog();
+  const { LoginFormHandler } = useLoginForm();
   const [isMenu, setIsMenu] = useState(false);
-
-  const funcLogout = () => {
-    Router.push("/");
-  };
-  const onClickLogout = () => {
-    handler.dialogCreate({
-      text: "本当にログオフしますか？",
-      func: () => funcLogout(),
-    });
-  };
 
   return (
     <header className="w-full h-full bg-tertiary py-2 px-6 flex justify-between border-b border-gray-300">
@@ -36,7 +25,7 @@ export const MainHeader = () => {
               <li>
                 <button
                   className="px-4 py-2 w-full text-left hover:bg-tertiary hover:text-primary"
-                  onClick={onClickLogout}
+                  onClick={LoginFormHandler.onClickLogout}
                 >
                   Logout
                 </button>

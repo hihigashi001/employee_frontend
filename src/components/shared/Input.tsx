@@ -6,7 +6,6 @@ type Props = {
   type: "text" | "email" | "tel" | "password" | "date";
   name: string;
   value?: string;
-  autoComplete?: string;
   autoFocus?: boolean;
   placeholder?: string;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
@@ -21,7 +20,6 @@ export const Input = ({
   type,
   name,
   value,
-  autoComplete,
   autoFocus,
   placeholder,
   onChange,
@@ -41,7 +39,7 @@ export const Input = ({
           type={type}
           name={name}
           value={value}
-          autoComplete={autoComplete}
+          autoComplete="new-password"
           autoFocus={autoFocus}
           className={classNames}
           placeholder={placeholder}
@@ -55,7 +53,7 @@ export const Input = ({
           type={type}
           name={name}
           value={value}
-          autoComplete={autoComplete}
+          autoComplete="new-password"
           autoFocus={autoFocus}
           className={classNames}
           placeholder={placeholder}

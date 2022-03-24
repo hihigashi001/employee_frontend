@@ -1,6 +1,12 @@
 import axios from "axios";
 
-const apiUrl = "https://api3.amidakuji.net:10443";
+const apiUrl = "http://localhost:777";
+// const apiUrl = "https://api3.amidakuji.net:10443";
+
+type auth_data = {
+  username: string;
+  password: string;
+}
 
 type create_data = {
   employeeId: string;
@@ -40,15 +46,21 @@ type update_data = {
 };
 
 export const get_user_all = async () => {
-  const res = await axios.get(`${apiUrl}/users`);
+  const res = await axios.get(`${apiUrl}/api/employees`, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `JWT ${localStorage.JWT}`,
+    },
+  })
   return res.data;
 };
 
 export const post_user_create = async (data: create_data) => {
   const res = await axios
-    .post(`${apiUrl}/users`, data, {
+    .post(`${apiUrl}/api/employees/`, data, {
       headers: {
         "Content-Type": "application/json",
+        Authorization: `JWT ${localStorage.JWT}`,
       },
     })
     .then((results) => {
@@ -62,9 +74,10 @@ export const post_user_create = async (data: create_data) => {
 
 export const post_user_update = async (data: update_data) => {
   const res = await axios
-    .put(`${apiUrl}/users/${data.id}`, data, {
+    .put(`${apiUrl}/api/employees/${data.id}`, data, {
       headers: {
         "Content-Type": "application/json",
+        Authorization: `JWT ${localStorage.JWT}`,
       },
     })
     .then((results) => {
@@ -77,11 +90,37 @@ export const post_user_update = async (data: update_data) => {
 };
 
 export const get_user_detail = async (id: string) => {
-  const res = await axios.get(`${apiUrl}/users/${id}`);
+  const res = await axios.get(`${apiUrl}/api/employees/${id}`, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `JWT ${localStorage.JWT}`,
+    },
+  })
   return res.data;
 };
 
 export const delete_user = async (id: string) => {
-  const res = await axios.delete(`${apiUrl}/users/${id}`);
+  const res = await axios.delete(`${apiUrl}/api/employees/${id}`, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `JWT ${localStorage.JWT}`,
+    },
+  })
   return res.data;
+};
+
+export const auth_login = async (data: auth_data) => {
+  const res = await axios
+    .post(`${apiUrl}/api/auth/jwt/create/`, data, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    .then((results) => {
+      return results.data;
+    })
+    .catch((error) => {
+      return error.response;
+    });
+  return res;
 };

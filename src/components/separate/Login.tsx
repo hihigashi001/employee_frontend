@@ -12,10 +12,10 @@ export const Login = () => {
         </h2>
         <div className="space-y-8">
           <Input
-            name="loginId"
+            name="username"
             type="text"
             placeholder="username"
-            value={LoginForm.loginId}
+            value={LoginForm.username}
             onChange={(e) => LoginFormHandler.onChange(e)}
           />
           <Input

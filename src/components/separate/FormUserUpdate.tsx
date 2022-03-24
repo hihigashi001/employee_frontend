@@ -31,7 +31,7 @@ export const FormUserUpdate = () => {
         <div className="flex justify-between w-full gap-x-4 py-2">
           <div>No. {FormUserUpdate.id}</div>
           <Button variant="red" className="w-3/12" onClick={funcDel}>
-            <FaTrash color="" />
+            <FaTrash size={20} />
             　削除する
           </Button>
         </div>
@@ -192,7 +192,7 @@ export const FormUserUpdate = () => {
             キャンセル
           </Button>
           <Button className="w-3/12" onClick={onSubmitFunction}>
-            <FaPlusCircle color="" />
+            <FaPlusCircle size={20} />
             　変更する
           </Button>
         </div>

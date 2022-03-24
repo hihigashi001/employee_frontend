@@ -183,8 +183,8 @@ export const FormUserCreate = () => {
             キャンセル
           </Button>
           <Button className="w-3/12" onClick={onSubmitFunction}>
-            <FaPlusCircle color="" />
-            追加する
+            <FaPlusCircle size={20} />
+            　追加する
           </Button>
         </div>
       </form>

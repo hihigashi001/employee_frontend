@@ -2,6 +2,7 @@ import Router from "next/router";
 import { useState } from "react";
 import { post_user_create } from "src/states/APIs";
 import { error, info } from "src/components/shared/Toast";
+import { useQueryClient } from 'react-query'
 
 type StateValues = {
   employeeId: string;
@@ -46,6 +47,7 @@ const initValues = {
 };
 
 export const useFormUserCreate = () => {
+  const queryClient = useQueryClient()
   const [FormUserCreate, setFormUserCreate] = useState<StateValues>(initValues);
   const FormUserCreateHandler: StateHandlers = {
     onChange: (event) => {
@@ -63,6 +65,7 @@ export const useFormUserCreate = () => {
           if (results.id !== undefined) {
             setFormUserCreate(initValues);
             info("登録完了しました。");
+            queryClient.invalidateQueries('get_user_all')
           } else {
             error("サーバエラーです。登録失敗しました。");
             setFormUserCreate(initValues);
