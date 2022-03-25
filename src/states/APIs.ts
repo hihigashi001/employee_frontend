@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const apiUrl = "http://localhost:777";
-// const apiUrl = "https://api3.amidakuji.net:10443";
+// const apiUrl = "http://localhost:777";
+const apiUrl = "https://api3.amidakuji.net:10443";
 
 type auth_data = {
   username: string;
