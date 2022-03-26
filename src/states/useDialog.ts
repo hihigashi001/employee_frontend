@@ -1,4 +1,5 @@
 import { atom, useAtom } from "jotai";
+
 type StateDialog = {
   isDialog: boolean;
   message: string;
@@ -13,7 +14,9 @@ const InitState: StateDialog = {
   message: "",
   function: {},
 };
+
 const dialogAtom = atom<StateDialog>(InitState);
+
 export const useDialog = () => {
   const [dialogState, setDialogState] = useAtom(dialogAtom);
   const handler = {

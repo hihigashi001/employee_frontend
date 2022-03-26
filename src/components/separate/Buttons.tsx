@@ -1,6 +1,9 @@
+// Library
 import { useRouter } from "next/router";
-import { Button } from "src/components/shared/Button";
+// icon
 import { FaPlusCircle } from "react-icons/fa";
+// components
+import { Button } from "src/components/shared/Button";
 
 export const Buttons = () => {
   const router = useRouter()

@@ -1,8 +1,11 @@
-// componets
-import { Button } from "src/components/shared/Button";
-import { Input } from "src/components/shared/Input";
+// icon
 import { FaPlusCircle, FaTrash } from "react-icons/fa";
+// jotai
 import { useFormUserUpdate } from "src/states/useFormUserUpdate";
+// componets
+import { Input } from "src/components/shared/Input";
+import { Button } from "src/components/shared/Button";
+import { Select } from "src/components/shared/Select"
 
 export const FormUserUpdate = () => {
   const { FormUserUpdate, FormUserUpdateHandler } = useFormUserUpdate();
@@ -23,6 +26,8 @@ export const FormUserUpdate = () => {
     FormUserUpdateHandler.onClickDelete();
   };
 
+  const selectStatusOpsions = ["在職", "退職", "休職"];
+
   return (
     <div>
       <form className="max-w-7xl m-auto" autoComplete="off">
@@ -30,10 +35,20 @@ export const FormUserUpdate = () => {
           <div>No. {FormUserUpdate.id}</div>
           <Button variant="red" className="w-3/12" onClick={funcDel}>
             <FaTrash size={20} />
-            削除する
+            　削除する
           </Button>
         </div>
         <div className="w-full bg-white p-4 rounded-md border border-gray-300">
+          <div className="flex my-4">
+            <div className="w-4/12 text-gray-700 p-2">状態</div>
+            <Select
+              className="w-8/12"
+              name="status"
+              options={selectStatusOpsions}
+              value={FormUserUpdate.status}
+              onChange={(e) => FormUserUpdateHandler.onSelectChange(e)}
+            />
+          </div>
           <div className="flex my-4">
             <div className="w-4/12 text-gray-700 p-2">社員ID</div>
             <Input
@@ -192,10 +207,10 @@ export const FormUserUpdate = () => {
           </Button>
           <Button className="w-3/12" onClick={onSubmitFunction}>
             <FaPlusCircle size={20} />
-            変更する
+            　変更する
           </Button>
         </div>
-      </form>
-    </div>
+      </form >
+    </div >
   );
 };

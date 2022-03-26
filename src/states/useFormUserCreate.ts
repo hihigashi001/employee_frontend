@@ -1,8 +1,12 @@
+// Library
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { post_user_create } from "src/states/APIs";
-import { error, info } from "src/components/shared/Toast";
 import { useQueryClient } from 'react-query'
+// jotai
+import { post_user_create } from "src/states/APIs";
+// components
+import { error, info } from "src/components/shared/Toast";
+// functions
 import { NullValidator } from "src/utilitys/functions"
 
 type StateValues = {

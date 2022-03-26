@@ -1,9 +1,14 @@
+// Library
 import { atom, useAtom } from "jotai";
 import { useRouter } from 'next/router'
-import { auth_login } from "src/states/APIs"
+// components
 import { error } from "src/components/shared/Toast";
+// Jotai
 import { useDialog } from "src/states/useDialog";
+// functions
+import { auth_login } from "src/states/APIs"
 import { NullValidator } from "src/utilitys/functions"
+
 
 type StateValues = {
     username: string;
@@ -50,6 +55,7 @@ export const useLoginForm = () => {
                 auth_login({ username: LoginForm.username, password: LoginForm.password }).then((results) => {
                     if (results !== undefined) {
                         localStorage.setItem("JWT", results.access);
+                        localStorage.setItem("JWTR", results.refresh);
                         results.access && router.push("/admin")
                         !results.access ? error("ログインに失敗しました。") : console.log("ログイン成功しました。")
                     } else {
@@ -63,6 +69,7 @@ export const useLoginForm = () => {
             const funcLogout = () => {
                 router.push("/");
                 localStorage.removeItem("JWT")
+                localStorage.removeItem("JWTR")
             };
             handler.dialogCreate({
                 text: "本当にログオフしますか？",

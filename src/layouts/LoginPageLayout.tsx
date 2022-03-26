@@ -1,7 +1,8 @@
+// Library
 import { ReactNode } from "react";
 
 type Props = {
-  children?: ReactNode;
+  children: ReactNode;
 };
 
 export const LoginPageLayout = ({ children }: Props) => {

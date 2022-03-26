@@ -1,13 +1,17 @@
+// Library
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useQueryClient } from 'react-query'
+// Jotai
 import {
   post_user_update,
   get_user_detail,
   delete_user,
 } from "src/states/APIs";
-import { error, info } from "src/components/shared/Toast";
-import { useQueryClient } from 'react-query'
 import { useDialog } from 'src/states/useDialog'
+// components
+import { error, info } from "src/components/shared/Toast";
+// functions
 import { NullValidator } from "src/utilitys/functions"
 
 type StateValues = {
@@ -28,10 +32,12 @@ type StateValues = {
   secondedDestination: string;
   maidenName: string;
   remarks: string;
+  status: string;
 };
 
 type StateHandlers = {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onSelectChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   onClickCancel: () => void;
   onClickUpdate: () => void;
   onClickDelete: () => void;
@@ -55,6 +61,7 @@ const initValues = {
   secondedDestination: "",
   maidenName: "",
   remarks: "",
+  status: "在職",
 };
 
 export const useFormUserUpdate = () => {
@@ -72,6 +79,11 @@ export const useFormUserUpdate = () => {
   }, [id]);
   const FormUserUpdateHandler: StateHandlers = {
     onChange: (event) => {
+      const value = event.target.value;
+      const name = event.target.name;
+      setFormUserUpdate({ ...FormUserUpdate, [name]: value });
+    },
+    onSelectChange: (event) => {
       const value = event.target.value;
       const name = event.target.name;
       setFormUserUpdate({ ...FormUserUpdate, [name]: value });

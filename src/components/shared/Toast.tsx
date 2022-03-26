@@ -1,4 +1,4 @@
-// components
+// Library
 import { toast, Flip } from "react-toastify";
 
 export const error = (message: string) => {

@@ -43,6 +43,7 @@ type update_data = {
   secondedDestination: string;
   maidenName: string;
   remarks: string;
+  status: string;
 };
 
 export const get_user_all = async () => {
@@ -115,6 +116,21 @@ export const auth_login = async (data: auth_data) => {
       headers: {
         "Content-Type": "application/json",
       },
+    })
+    .then((results) => {
+      return results.data;
+    })
+    .catch((error) => {
+      return error.response;
+    });
+  return res;
+};
+
+
+export const token_refresh = async () => {
+  const res = await axios
+    .post(`${apiUrl}/api/auth/jwt/refresh/`, {
+      refresh:localStorage.JWTR
     })
     .then((results) => {
       return results.data;

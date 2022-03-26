@@ -1,6 +1,8 @@
+//jotai
+import { useLoginForm } from "src/states/useLoginForm";
+// components
 import { Button } from "src/components/shared/Button";
 import { Input } from "src/components/shared/Input";
-import { useLoginForm } from "src/states/useLoginForm";
 
 export const Login = () => {
   const { LoginForm, LoginFormHandler } = useLoginForm();

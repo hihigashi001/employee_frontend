@@ -1,8 +1,10 @@
-// componets
-import { Button } from "src/components/shared/Button";
-import { Input } from "src/components/shared/Input";
+// icon
 import { FaPlusCircle, FaCreativeCommonsBy } from "react-icons/fa";
+// jotai
 import { useFormUserCreate } from "src/states/useFormUserCreate";
+// componets
+import { Input } from "src/components/shared/Input";
+import { Button } from "src/components/shared/Button";
 
 export const FormUserCreate = () => {
   const { FormUserCreate, FormUserCreateHandler } = useFormUserCreate();

@@ -1,7 +1,9 @@
-import { Table } from "src/components/shared/Table"
+// jotai
 import { useEmployeeData } from "src/states/useEmployeeData"
-import { Loading } from "src/components/shared/Loading"
+// components
+import { Table } from "src/components/shared/Table"
 import { Error } from "src/components/shared/Error"
+import { Loading } from "src/components/shared/Loading"
 
 export const EmployeeList = () => {
     const { columns, EmployeeData, isLoading, error } = useEmployeeData()

@@ -1,8 +1,11 @@
+// Library
 import { useMemo, useEffect } from "react"
 import { atom, useAtom } from "jotai";
 import { Column } from "react-table";
 import { useQuery } from "react-query";
+// jotai
 import { get_user_all } from "src/states/APIs"
+// functions
 import { cellFunction_link } from "src/utilitys/functions";
 
 type StateValues = {
@@ -22,6 +25,7 @@ type StateValues = {
     secondedDestination: string,
     maidenName: string,
     remarks: string,
+    status: string;
 };
 
 const EmployeeDataAtom = atom<StateValues[]>([]);
@@ -30,6 +34,7 @@ export const useEmployeeData = () => {
     const { isLoading, error, data } = useQuery(
         "get_user_all", () => get_user_all()
     );
+
     const columns: Column<StateValues>[] = useMemo(
         () => [
             {
@@ -68,6 +73,10 @@ export const useEmployeeData = () => {
             {
                 Header: "役職",
                 accessor: "position",
+            },
+            {
+                Header: "状態",
+                accessor: "status",
             },
             {
                 Header: "入社日",
