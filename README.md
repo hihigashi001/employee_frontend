@@ -2,15 +2,12 @@
 
 ## 更新履歴
 
-Created 2022/03/16 -20222/03/21
+Created 2022/03/16 -2022/03/21　新規作成
+Updated 2022/03/22 -2022/03/28  いったん完成版
 
 ## 開発環境構築
 
 yarn install
-
-## backend
-cd data
-node .\api-server.js
 
 ## 動作確認
 

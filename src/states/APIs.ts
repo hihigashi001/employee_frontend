@@ -1,7 +1,6 @@
 import axios from "axios";
 
-// const apiUrl = "http://localhost:777";
-const apiUrl = "https://api3.amidakuji.net:10443";
+const apiUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}`;
 
 type auth_data = {
   username: string;
